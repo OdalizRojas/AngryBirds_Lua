@@ -11,4 +11,4 @@ rutaAssets = "Assets/"
 
 local composer = require "composer"
 
-composer.gotoScene("splashScreen", {time = 1000, effect = "fade"})
+composer.gotoScene("splashScreen", {time = 700, effect = "fade"})
