@@ -21,12 +21,13 @@ local grid_width = CW/16
 local grid_height = CH/10
 
 local rock_large2
+local rock_large_hor2
 
 local tPrevious = system.getTimer()
 local tDelta
 
 physics.start()
-physics.setDrawMode("hybrid")
+physics.setDrawMode("normal")
 
 group_scene:insert(group_bg)
 group_scene:insert(group_interface)
@@ -71,8 +72,9 @@ red.x = CW*0.06; red.y = CH*0.75
 red:scale(0.25,0.25)
 red:setSequence("fly")
 red:play()
-physics.addBody(red, "dynamic",{radius = 15, friction = 0})
---red.isFixedRotation = true
+red.name = "bird"
+physics.addBody(red, "dynamic",{radius = 15})
+
 
 local floor = display.newRect(group_bg, CW/2, CH*0.9, CW, 30)
 floor:setFillColor(0,1,0,0)
@@ -112,50 +114,63 @@ end
 
 local wood_square = display.newImageRect(group_scene,rutaAssets.."wood_rectangle.png",grid_width,grid_height)
 wood_square.x = 11.5*grid_width; wood_square.y = grid_height*8.5
+wood_square.name = "obstacle_square"
 physics.addBody(wood_square, "dynamic", {friction = 0.01})
 
 local ice_rectangle1 = display.newImageRect(group_scene,rutaAssets.."ice_rectangle.png",grid_width/2,grid_height)
 ice_rectangle1.x = 13.25*grid_width; ice_rectangle1.y = grid_height*8.5
+ice_rectangle1.name = "obstacle_ice_rectangle1"
 physics.addBody(ice_rectangle1, "dynamic", {friction = 0.01})
 
 local ice_rectangle2 = display.newImageRect(group_scene,rutaAssets.."ice_rectangle.png",grid_width/2,grid_height)
 ice_rectangle2.x = 13.75*grid_width; ice_rectangle2.y = grid_height*8.5
+ice_rectangle2.name = "obstacle_ice_rectangle2"
 physics.addBody(ice_rectangle2, "dynamic", {friction = 0.01})
 
 local ice_large1 = display.newImageRect(group_scene,rutaAssets.."ice_large.png",grid_width/2,2*grid_height)
 ice_large1.x = 11.25*grid_width; ice_large1.y = grid_height*7
+ice_large1.name = "obstacle_ice_large1"
 physics.addBody(ice_large1, "dynamic", {friction = 0.01})
 
 local ice_large2 = display.newImageRect(group_scene,rutaAssets.."ice_large.png",grid_width/2,2*grid_height)
 ice_large2.x = 11.75*grid_width; ice_large2.y = grid_height*7
+ice_large2.name = "obstacle_ice_large2"
 physics.addBody(ice_large2, "dynamic", {friction = 0.01})
 
 local rock_large1 = display.newImageRect(group_scene,rutaAssets.."rock_large.png",grid_width/2,2*grid_height)
 rock_large1.x = 13.25*grid_width; rock_large1.y = grid_height*7
+rock_large1.name = "obstacle_rock_large1"
 physics.addBody(rock_large1, "dynamic", {friction = 0.01})
 
 rock_large2 = display.newImageRect(group_scene,rutaAssets.."rock_large.png",grid_width/2,2*grid_height)
 rock_large2.x = 13.75*grid_width; rock_large2.y = grid_height*7
+rock_large2.name = "obstacle_rock_large2"
 physics.addBody(rock_large2, "dynamic", {friction = 0.01})
 
 local rock_large_hor = display.newImageRect(group_scene,rutaAssets.."rock_large_horizontal.png",3*grid_width,grid_height/2)
 rock_large_hor.x = 12.5*grid_width; rock_large_hor.y = grid_height*5.75
+rock_large_hor.name = "obstaculo0"
 physics.addBody(rock_large_hor, "dynamic", {friction = 0.01})
 
 local rock_triangle_rigth = display.newImageRect(group_scene,rutaAssets.."rock_triangleLeft.png",1*grid_width,grid_height)
 rock_triangle_rigth.x = 13.5*grid_width; rock_triangle_rigth.y = grid_height*5
+rock_triangle_rigth.name = "obstacle_rock_triangle_rigth"
 physics.addBody(rock_triangle_rigth, "dynamic", {friction = 0.01})
 
 local rock_triangle_left= display.newImageRect(group_scene,rutaAssets.."ice_triangle_rotate.png",1*grid_width,grid_height)
 rock_triangle_left.x = 11.5*grid_width; rock_triangle_left.y = grid_height*5
+rock_triangle_left.name = "obstacle_rock_triangle_left"
 physics.addBody(rock_triangle_left, "dynamic", {friction = 0.01})
 
-local rock_large_hor2 = display.newImageRect(group_scene,rutaAssets.."rock_large_horizontal.png",3*grid_width,grid_height/2)
+rock_large_hor2 = display.newImageRect(group_scene,rutaAssets.."rock_large_horizontal.png",3*grid_width,grid_height/2)
 rock_large_hor2.x = 12.5*grid_width; rock_large_hor2.y = grid_height*4.25
+rock_large_hor2.name = "obstaculo1"
 physics.addBody(rock_large_hor2, "dynamic", {friction = 0.01})
+
 
 local birds_home = display.newImageRect(group_scene,rutaAssets.."birds_home.png",grid_width,grid_height)
 birds_home.x = 12.5*grid_width; birds_home.y = grid_height*3.5
+birds_home.name = "obstacle_birds_home"
 physics.addBody(birds_home, "dynamic", {friction = 0.01})
 
 -- Pigs --
@@ -165,6 +180,7 @@ pig.x = grid_width*12.5; pig.y = grid_height*5.5
 pig:scale(0.5,0.5)
 pig:setSequence("wait")
 pig:play()
+pig.name = "obstacle_pig"
 physics.addBody(pig, "dynamic",{radius = 15, friction = 0.01})
 
 local pig_hurt = display.newSprite(group_scene,pig_sprite, sequence)
@@ -172,10 +188,12 @@ pig_hurt.x = grid_width*11.5; pig_hurt.y = grid_height*3.5
 pig_hurt:scale(0.5,0.5)
 pig_hurt:setSequence("wait_hurt")
 pig_hurt:play()
+pig_hurt.name = "obstacle_pig_hurt"
 physics.addBody(pig_hurt, "dynamic",{radius = 15, friction = 0.01})
 
 local pig_military= display.newImageRect(group_scene,rutaAssets.."pig_military.png",1*grid_width,grid_height)
 pig_military.x = 12.5*grid_width; pig_military.y = grid_height*8.5
+pig_military.name = "obstacle_pig_military"
 physics.addBody(pig_military, "dynamic", {friction = 0.01})
 
 -- ===== Function of Parabolic Moviment =====
@@ -195,30 +213,77 @@ local function parabolic_move(event)
     red:applyForce(forceX, forceY, red.x, red.y)
 end
 
-function onTouch(event)
-    -- red:setLinearVelocity(100, -500)
-    -- vx, vy = red:getLinearVelocity()
+local function onTouch(event)
     if event.phase == "began" then
         pos_beganX = event.x
         pos_beganY = event.y
-        print(pos_beganX,pos_beganY)
     elseif event.phase == "moved" then
         red.x = event.x
         red.y = event.y
-        print(red.x,red.y)
     elseif event.phase == "ended" or event.phase == "cancelled" then
         parabolic_move(event)
     end
 end
 
-
-local function onPostCollision( self, event )
-    if event.force >= 0.01 then
-        rock_large2.friction = 0
-    end
-    event.target.x = pos_beganX
-    event.target.y = pos_beganY
+local function newExplosion(collisionX,collisionY)
+    local explosion = display.newImageRect(group_scene, rutaAssets.."efect_collision.png", 666/3,375/3)
+	explosion.x, explosion.y = collisionX, collisionY
+	--explosion.blendMode = "add"
+    transition.to( explosion, { time=1000, rotation=45, alpha=0, transition=easing.outQuad,
+		onComplete = function()
+			display.remove(explosion)
+		end
+	})
 end
+
+
+local function onCollision(self,event)
+    if event.other.name == "obstaculo1" then 
+        display.remove(event.other)
+        newExplosion( self.x, self.y )
+    elseif event.other.name == "obstaculo0" then
+        display.remove(event.other)
+        newExplosion( self.x, self.y )
+    elseif event.other.name == "obstacle_square" then
+        display.remove(event.other)
+        newExplosion( self.x, self.y )
+    elseif event.other.name == "obstacle_ice_rectangle1" then
+        display.remove(event.other)
+        newExplosion( self.x, self.y )
+    elseif event.other.name == "obstacle_ice_rectangle2" then
+        display.remove(event.other)
+        newExplosion( self.x, self.y )
+    elseif event.other.name == "obstacle_ice_large1" then
+        display.remove(event.other)
+        newExplosion( self.x, self.y )
+    elseif event.other.name == "obstacle_ice_large2" then
+        display.remove(event.other)
+        newExplosion( self.x, self.y )
+    elseif event.other.name == "obstacle_rock_large1" then
+        display.remove(event.other)
+        newExplosion( self.x, self.y )
+    elseif event.other.name == "obstacle_rock_large2" then
+        display.remove(event.other)
+        newExplosion( self.x, self.y )
+    elseif event.other.name == "obstacle_rock_triangle_rigth" then
+        display.remove(event.other)
+        newExplosion( self.x, self.y )
+    elseif event.other.name == "obstacle_rock_triangle_left" then
+        display.remove(event.other)
+        newExplosion( self.x, self.y )
+    elseif event.other.name == "obstacle_birds_home" then
+        display.remove(event.other)
+        newExplosion( self.x, self.y )
+    elseif event.other.name == "obstacle_pig" then
+        display.remove(event.other)
+        newExplosion( self.x, self.y )
+    elseif event.other.name == "obstacle_pig_hurt" then
+        display.remove(event.other)
+        newExplosion( self.x, self.y )
+    end
+    self.x = 100
+    self.y = 200
+ end
 
 -- CREATE
 function scene:create( event )
@@ -239,8 +304,7 @@ function scene:show( event )
     if ( phase == "will" ) then
  
     elseif ( phase == "did" ) then
-        rock_large2.postCollision = onPostCollision
-        rock_large2:addEventListener( "postCollision" )
+
     end
 end
  
@@ -266,6 +330,9 @@ function scene:destroy( event )
  
 end
  
+red.collision = onCollision
+red:addEventListener("collision")
+
 scene:addEventListener( "create", scene )
 scene:addEventListener( "show", scene )
 scene:addEventListener( "hide", scene )
